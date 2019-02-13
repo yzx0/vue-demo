@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <title>demo-4</title>
+</head>
+
+<body>
+  <div id="app">
+    <p>计算属性实现：</p>
+    <p>{{getFullName}}</p>
+  </div>
+  <script>
+    let app = new Vue({
+      el: '#app',
+      data() {
+        return {
+          firstName: 'Zhang',
+          lastName: 'san',
+          fullName: ''
+        }
+      },
+      computed: {
+        getFullName() {
+          this.fullName = this.firstName + ' ' + this.lastName
+          return this.fullName
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

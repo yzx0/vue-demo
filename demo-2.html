@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <title>demo-2</title>
+</head>
+<body>
+  <div id="demo2">
+    <p>{{reverseString}}</p>
+    <hr>
+    <p>总价：{{totalPrices}}</p>
+  </div>
+  <script>
+    {
+      var app2 = new Vue({
+        el:'#text',
+        data:{
+          message:'  块（我是另一个Vue实例中的数据'
+        }
+      })
+      var app1 = new Vue({
+        el:'#demo2',
+        data:{
+          text:'123,456,789',
+          prices:0,
+          shoppingCar1:[
+            {
+              productName:'iPhone',
+              productPrice:6999,
+              productCount:2
+            },
+            {
+              productName:'iPad',
+              productPrice:2999,
+              productCount:1
+            }
+          ],
+          shoppingCar2:[
+            {
+              productName:'vansShoe',
+              productPrice:999,
+              productCount:2
+            },
+            {
+              productName:'nikeShoe',
+              productPrice:1999,
+              productCount:1
+            }
+          ]
+        },
+        computed: {
+          reverseString(){
+            return this.text.split(',').reverse().join(',')
+          },
+          totalPrices(){
+            this.prices = 0
+            this.shoppingCar1.map((product)=>{
+              this.prices = this.prices + (product.productPrice * product.productCount)
+            })
+            this.shoppingCar2.map((product)=>{
+              this.prices = this.prices + (product.productPrice * product.productCount)
+            })
+            return this.prices + app2.message
+          }
+        }
+      })
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <title>demo-3</title>
+</head>
+
+<body>
+  <div id="app">
+    <p>{{fullName}}</p>
+    <hr>
+    <p>{{message}}</p>
+    <p>通过computed得到</p>
+    <p>{{now}}</p>
+    <p>通过methods得到</p>
+    <p>{{getNow()}}</p>
+  </div>
+  <script>
+    let app2 = new Vue({
+      el:'aaa',
+      data(){
+        return{
+          message:'我是另一个vue实例'
+        }
+      },
+      computed:{
+        consoleA(){
+          console.log('aaa')
+        }
+      }
+    })
+    let app = new Vue({
+      el: '#app',
+      data() {
+        return {
+          firstName: 'Zhang',
+          lastName: 'San',
+          now:'',
+          message:'哈哈哈'
+        }
+      },
+      computed: {
+        fullName: {
+          get:function(){
+            return `${this.firstName},${this.lastName},${app2.message}`
+          },
+          set: function (newName) {
+            let array = newName.split(',')
+            this.firstName = array[0]
+            this.lastName = array[1]
+          }
+        },
+        now(){
+          return Date.now()
+        }
+      },
+      methods: {
+        fullName1(){
+          return `${this.firstName},${this.lastName},${app2.message}`
+        },
+        getNow(){
+          return Date.now()
+        }
+      },
+    })
+  </script>
+</body>
+
+</html>
