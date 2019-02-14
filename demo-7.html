@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>基本指令和条件渲染指令</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <style>
+    [v-cloak] {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <p>基本指令</p>
+    <p>没有v-cloak:</p>
+    <p>{{message}}</p>
+    <p>有v-cloak</p>
+    <p v-cloak>{{message}}</p>
+    <hr>
+    <p>v-once:</p>
+    <p>{{onlyRenderOnce}}</p>
+    <p v-once>{{onlyRenderOnce}}</p>
+    <hr>
+    <p>条件渲染指令</p>
+    <p v-if="2>3">{{textIf}}</p>
+    <p v-else-if="3>4">{{textElseif}}</p>
+    <p v-else>{{textElse}}</p>
+    <hr>
+    <p>使用条件渲染指令导致的bug(主要原因是vue出于效率考虑，尽量避免重复渲染,加key即可解决，key加在需要重新渲染的标签上</p>
+    <div v-if="type === 'name'">
+      <label>用户名：</label><input type="text" placeholder="请输入用户名" key='userUame'>
+    </div>
+    <div v-else-if="type === 'password'">
+      <label>密码：</label><input type="password" placeholder="请输入密码" key='userPassword'>
+    </div>
+    <button @click='changeInputBar'>点击切换</button>
+    <hr>
+    <p>v-show:</p>
+    <p v-show="2>1">{{textVShow}}</p>
+  </div>
+
+  <script>
+    let app = new Vue({
+      el: '#app',
+      data() {
+        return {
+          message: '测试v-cloak',
+          onlyRenderOnce: '我只渲染一次',
+          textIf: '蛤蛤if是true的，我出来啦',
+          textElse: '这里是else逻辑',
+          textElseif: '这里是elseif的逻辑',
+          type: 'name',
+          textVShow: 'v-show is truly，so...i am coming'
+        }
+      },
+      methods: {
+        changeInputBar() {
+          if (this.type === 'name') {
+            this.type = 'password'
+          } else if (this.type === 'password') {
+            this.type = 'name'
+          }
+        }
+      },
+    })
+  </script>
+</body>
+
+</html>

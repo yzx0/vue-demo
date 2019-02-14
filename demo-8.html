@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <title>v-for和数组操作</title>
+</head>
+<body>
+  <div id="app">
+    <ul >
+      <li v-for="(item,index) in array">{{item.num}}---{{index}}</li>
+      <button @click="arrayBtn">数组</button>
+      <button @click="reverseBtn">翻转</button>
+      <button @click="changeData">改变第2项数据</button>
+      <button @click="filtrationData">过滤</button>
+    </ul>
+    <ul>
+      <li v-for="(value,key,index) in object">{{index}}---{{value}}</li>
+    </ul>
+    <button @click="objBtn">对象</button>
+    <hr>
+    <ul>
+      <li v-for="value in array2">{{value}}</li>
+      <button @click="mySort">sort</button>
+    </ul>
+    <hr>
+    {{filtrationData()}}
+  </div>
+  <script>
+    let app = new Vue({
+      el:'#app',
+      data() {
+        return {
+          array:[{num:'11'},{num:'222222222222'},{num:'333333'},{num:'uakc'},{num:'asd'}],
+          array2:['aa','bbb','d','ccccc'],
+          object:{
+            person1:'bob',
+            person2:'mikc',
+            person3:'jhon'
+          },
+        }
+      },
+      methods: {
+        arrayBtn(){
+          this.array.sort(function(a,b){
+            return b.num.length-a.num.length
+          })
+        },
+        objBtn(){},
+        mySort(){
+          this.array2.sort(function(a,b){
+            return b.length-a.length
+          })
+        },
+        reverseBtn(){
+          //this.array会改变
+          this.array.reverse()
+        },
+        changeData(){
+          Vue.set(this.array,1,{num:'我是第二项'})
+        },
+        filtrationData(){
+          //返回一个新数组，this.array不会改变
+          return this.array.filter(function(item){
+            let {num} = item
+            console.log(num.length)
+            return num.length <= 3
+          })
+        }
+      },
+    })
+  </script>
+</body>
+</html>
