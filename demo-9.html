@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <title>事件和修饰符</title>
+</head>
+<body>
+  <div id="demo">
+    <span>{{count}}</span>
+    <button @click="addOne(count)">点击+1</button>
+    <hr>
+    <p>修饰符：无</p>
+    <div :style="{height:height+'px',width:width+'px',background:background}" @click="eventDiv">
+      <button @click="eventBtn">点我</button>
+    </div>
+    <p>修饰符：stop</p>
+    <div :style="{height:height+'px',width:width+'px',background:background}" @click="eventDiv">
+      <button @click.stop="eventBtn">点我</button>
+    </div>
+    <hr>
+    <p>修饰符：无</p>
+    <form>
+      <button type="submit">提交</button>
+    </form>
+    <p>修饰符：prevent</p>
+    <form @submit.prevent>
+      <button type="submit">提交</button>
+    </form>
+    <hr>
+    <p>修饰符：无</p>
+    <div :style="{height:height+'px',width:width+'px',background:background}" @click="eventDiv">
+      <button @click="eventBtn">点我</button>
+    </div>
+    <p>修饰符：self(之监听当前的元素事件，别的一概不管</p>
+    <div :style="{height:height+'px',width:width+'px',background:background}" @click.self="eventDiv">
+      <button @click="eventBtn">点我</button>
+    </div>
+    <hr>
+    <p>监听键盘事件</p>
+    <input type="text" @keyup.enter="keyboard">
+  </div>
+
+  <script>
+    let demo = new Vue({
+      el:'#demo',
+      data() {
+        return {
+          count:0,
+          height:100,
+          width:100,
+          background:'pink'
+        }
+      },
+      methods: {
+        addOne(count){
+          this.count+=count
+        },
+        eventDiv(){
+          console.log('div被点击了')
+        },
+        eventBtn(){
+          console.log('button被点击了')
+        },
+        keyboard(){
+          console.log('enter')
+        }
+      },
+    })
+  </script>
+</body>
+</html>
