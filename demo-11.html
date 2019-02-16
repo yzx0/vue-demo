@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <title>组件的学习</title>
+</head>
+<body>
+  <div id="demo" style="border:1px solid pink">
+    <first-component></first-component>
+    <demo-component></demo-component>  
+  </div>
+  <div id="demo2" style="border:1px solid black">
+      <first-component></first-component>
+      <table>
+        <tbody is="first-component"></tbody>
+      </table>
+  </div>
+  <hr>
+  <div id="demo3">
+    <demo3-component></demo3-component>
+    <demo3-component></demo3-component>
+  </div>
+  <hr>
+  <p>父组件向子组件传递数据（props</p>
+  <div id="parent" style="border:1px solid black">
+    <p>我是父组件</p>
+    <child-component message="我来自父组件"></child-component>
+    <child-component :message="xxx"></child-component>
+  </div>
+  <hr>
+  <p>子组件对父组件传来的数据进行操作</p>
+  <div id="demo4">
+    <p>我是父组件</p>
+    <input type="text" v-model="width">
+    <demo4-component :message="message" :width="width"></demo4-component>
+  </div>
+  <script>
+    let demo4 = new Vue({
+      el:'#demo4',
+      data:{
+        message:'我来自父组件',
+        width:0
+      },
+      components:{
+        'demo4-component':{
+          props:['message','width'],
+          data() {
+            return {
+              xxx:this.message,
+            }
+          },
+          computed: {
+            divStyle(){
+              return {
+                border:'1px solid pink'
+              }
+            },
+            divStyle2(){
+              return {
+                width:this.width+'px',
+                background:'red',
+                height:'20px'
+              }
+            }
+          },
+          template:'<div :style="divStyle">{{xxx}}<div :style="divStyle2"></div></div>'
+        }
+      }
+    })
+    Vue.component('first-component',{
+      template:'<p>我是一个组件</p>'
+    })
+    let demo = new Vue({
+      el:'#demo',
+      data() {
+        return {
+          
+        }
+      },
+      components:{
+        'demo-component':{
+          template:'<p>我是demo的组件，sei也别想动我</p>'
+        }
+      }
+    })
+    let demo2 = new Vue({
+      el:'#demo2',
+      data() {
+        return {
+          
+        }
+      },
+    })
+    let demo3 = new Vue({
+      el:'#demo3',
+      data:{
+
+      },
+      components:{
+        'demo3-component':{
+          template:'<div><p>{{count}}</p><button @click="addOne">+1</button></div>',
+          data(){
+            return {
+              count:0
+            }
+          },
+          methods: {
+            addOne(){
+              this.count+=1
+              console.log(this)
+            }
+          },
+        }
+      }
+    })
+    let parent = new Vue({
+      el:'#parent',
+      data:{
+        xxx:'我来自父组件,我是动态的'
+      },
+      components:{
+        'child-component':{
+          props:['message'],
+          template:'<div style="border:3px solid pink"><p>我是子组件</p><p>{{message}}</p><button @click="addStr">点我嘻嘻</button></div>',
+          methods:{
+            addStr(){
+              this.message = this.message + '嘻嘻'
+            }
+          }
+        },
+        'bind-component':{
+          props:['message'],
+          template:'<div style="border:3px solid pink"><p>我是子组件</p><p>{{message}}</p><p>{{message1}}</p><button @click="addStr">点我嘻嘻</button></div>'
+        }
+      },
+    })
+  </script>
+</body>
+</html>

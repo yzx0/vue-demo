@@ -17,7 +17,20 @@
     <button @click = 'toUper'>大写</button>
     <button @click = 'addBackground'>添加背景色</button>
     <button @click = 'removeBackground'>取消背景色</button>
+    <hr>
   </div>
+  <div id="demo">
+    <input value="value">
+    <input :value="value">
+    </div>
+  <script>
+    let demo = new Vue({
+      el:'#demo',
+      data:{
+        value:'hahaah'
+      }
+    })
+  </script>
   <script src="./main.js"></script>
 </body>
 </html>
