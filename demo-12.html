@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <title>Document</title>
+</head>
+<body>
+  <div id="demo">
+    <demo-component>{{message}}</demo-component>
+    <demo5-component></demo5-component>
+  </div>
+
+  <script>
+    let demo = new Vue({
+      el:'#demo',
+      data:{
+        message:'xxxxxxx'
+      },
+      components:{
+        'demo-component':{
+          template:'<div></div>',
+          methods: {
+            xxx(){
+              alert('xxx')
+            }
+          },
+        },
+        'demo5-component': {
+          template: '<div><button v-on:click="aaa">aaa</button></div>',
+          data() {
+            return {
+              total: 0
+            }
+          },
+          methods: {
+            aaa() {
+              alert('-------')
+            }
+          },
+        },
+      }
+    })
+  </script>
+</body>
+</html>
