@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <title>render函数</title>
+</head>
+<body>
+  <div id="app">
+    <child-component></child-component>
+  </div>
+  <hr>
+  <div id="demo">
+    <child></child>
+  </div>
+  <hr>
+  <div id="demo2">
+    <demo2-component>
+      <h1 slot="header">悯农</h1>
+      <p>锄禾日当午</p>
+      <p>汗滴禾下土</p>
+      <p>谁之盘中餐</p>
+      <p>粒粒皆辛苦</p>
+      <h3 slot="footer">杜甫</h3>
+    </demo2-component>
+  </div>
+  <script>
+    let demo2 = new Vue({
+      el:'#demo2',
+      components:{
+        'demo2-component':{
+          render(createElement){
+            let header = this.$slots.header
+            let main = this.$slots.default
+            let footer = this.$slots.footer
+            return createElement('div',[
+              createElement('header',header),
+              createElement('main',main),
+              createElement('footer',footer),
+            ])
+          }
+        }
+      }
+    })
+    Vue.component('child',{
+      render(createElement){
+        return createElement('p',{
+          class:{
+            aaa:true,
+            bbb:false,
+            ccc:1-1,
+            ddd:1+1
+          },
+          style:{
+            border:'1px solid pink'
+          },
+          attrs:{
+            id:'hahaha',
+          },
+          domProps:{
+          }
+        },[
+          createElement('h1','i am h1 tital'),
+          createElement('h2','i am h2 tital'),
+          createElement('h3','i am h3 tital'),
+        ])
+      },
+    })
+    let demo = new Vue({
+      el:'#demo'
+    })
+    Vue.component('child-component',{
+      props:['level'],
+      render(createElement) {
+        return createElement(function(){
+          return {
+            template:'<div>我是蜡笔小新</div>'
+          }
+        }.call())
+      },
+    })
+/*     Vue.component('a-component',{
+      template:'#aDom',
+      props:['level']
+    }) */
+    let app = new Vue({
+      el:'#app',
+      data:{
+        level:3
+      }
+    })
+  </script>
+</body>
+</html>

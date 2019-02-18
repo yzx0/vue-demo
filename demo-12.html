@@ -5,43 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-  <title>Document</title>
+  <title>自定义指令</title>
 </head>
 <body>
-  <div id="demo">
-    <demo-component>{{message}}</demo-component>
-    <demo5-component></demo5-component>
+  <div id="app">
+    <div v-focus:fooooo.a.b.c="message"></div>
   </div>
-
   <script>
-    let demo = new Vue({
-      el:'#demo',
+    Vue.directive('focus',{
       data:{
-        message:'xxxxxxx'
+          message:'hahah'
       },
-      components:{
-        'demo-component':{
-          template:'<div></div>',
-          methods: {
-            xxx(){
-              alert('xxx')
-            }
-          },
-        },
-        'demo5-component': {
-          template: '<div><button v-on:click="aaa">aaa</button></div>',
-          data() {
-            return {
-              total: 0
-            }
-          },
-          methods: {
-            aaa() {
-              alert('-------')
-            }
-          },
-        },
+      inserted(el,binding,vnode){
+        console.dir(binding)
+        el.innerHTML=`
+          name----------${binding.name}<br>
+          value----------${binding.value}<br>
+          expression----------${binding.expression}<br>
+          arg----------${binding.arg}<br>
+          modifiers----------${JSON.stringify(binding.modifiers)}<br>
+        `
+        console.log(vnode)
       }
+    })
+    let app = new Vue({
+      el:'#app',
+      data:{
+        message:'eee'
+      },
     })
   </script>
 </body>

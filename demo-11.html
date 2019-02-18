@@ -102,7 +102,41 @@
         </div>
     </demo8-xxx-component>
   </div>
+  <hr>
+  <p>动态组件（可以动态切换，比如tab</p>
+  <div id="demo9">
+    <component :is="componentId">
+      <component-a></component-a>
+      <component-b></component-b>
+      <component-c></component-c>
+    </component>
+    <button @click="changeComponent('component-a')">A</button>
+    <button @click="changeComponent('component-b')">B</button>
+    <button @click="changeComponent('component-c')">C</button>
+  </div>
   <script>
+    let demo9 = new Vue({
+      el:'#demo9',
+      data:{
+        componentId:'component-a'
+      },
+      methods:{
+        changeComponent(value){
+          this.componentId = value
+        }
+      },
+      components:{
+        'component-a':{
+          template:'<div>组件A</div>'
+        },
+        'component-b':{
+          template:'<div>组件B</div>'
+        },
+        'component-c':{
+          template:'<div>组件C</div>'
+        },
+      }
+    })
     let dmeo8 = new Vue({
       el:'#demo8',
       data:{
