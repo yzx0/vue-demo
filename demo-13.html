@@ -26,7 +26,128 @@
       <h3 slot="footer">杜甫</h3>
     </demo2-component>
   </div>
+  <div id="demo3">
+    <button @click="changeImg">点击切换图片</button>{{show}}
+    <change-component :show="show"></change-component>
+  </div>
+  <hr>
+  <div id="demo4">
+    <input-conponent v-model="inputValue"></input-conponent><br>
+    {{inputValue}}
+  </div>
+  <hr>
+  <div id="demo5">
+    <slot-component>
+      <template scope="prop">
+        {{prop.text}}
+        {{prop.message}}
+      </template>
+    </slot-component>
+  </div>
+  <hr>
+  <p>函数化组件</p>
+  <div id="demo6">
+    <function-component :msg="msg"></function-component>
+  </div>
+
+
+
   <script>
+    let demo6 = new Vue({
+      el:'#demo6',
+      data:{
+        msg:'haha'
+      },
+      components:{
+        'function-component':{
+          //functional:false,//无状态，无实例
+          props:['msg'],
+          render(createElement){
+            return createElement('button',{
+              on:{
+                click(){
+                  console.log(this)
+                }
+              }
+            },'查看context')
+          }
+        }
+      }
+    })
+    let demo5 = new Vue({
+      el:'#demo5',
+      components:{
+        'slot-component':{
+          render(createElement){
+            return createElement('div',this.$scopedSlots.default({
+              text:'haha',
+              message:'heihei'
+            }))
+          }
+        }
+      }
+    })
+    let demo4 = new Vue({
+      el:'#demo4',
+      data:{
+        inputValue:'dva'
+      },
+      methods:{
+      /*   getValue(value){
+          this.inputValue = value
+        } */
+      },
+      components:{
+        'input-conponent':{
+          props:['name'],
+          render(createElement){
+            var self = this
+            return createElement('input',{
+              domProps:{
+                value:self.name
+              },
+              on:{
+                input(event){
+                  let a = this
+                  self.$emit('input',event.target.value)
+                }
+              }
+            })
+          }
+        }
+      }
+    })
+    let demo3 = new Vue({
+      el:'#demo3',
+      data:{
+        show:true
+      },
+      methods: {
+        changeImg(){
+          this.show = !this.show
+        }
+      },
+      components:{
+        'change-component':{
+          props:['show'],
+          render(createElement){
+            if(this.show){
+              return createElement('img',{
+                attrs:{
+                  src:''
+                }
+              })
+            }else{
+              return createElement('img',{
+                attrs:{
+                  src:''
+                }
+              })
+            }
+          }
+        }
+      }
+    })
     let demo2 = new Vue({
       el:'#demo2',
       components:{
